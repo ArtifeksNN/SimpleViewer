@@ -31,10 +31,6 @@ Item {
 
     states: [
         State {
-            name: "highlighted"
-            when: isHighlighted
-        },
-        State {
             name: "noHighlighted"
             when: !isHighlighted
 

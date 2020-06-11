@@ -72,6 +72,33 @@ ApplicationWindow {
         }
         height: parent.height
         color: "gray"
+        clip: true
+
+        Flickable {
+            anchors.fill: parent
+//            boundsMovement: Flickable.StopAtBounds
+//            boundsBehavior: Flickable.DragOverBounds
+            contentWidth: creator.width;
+            contentHeight: creator.height
+
+            Repeater {
+                id: creator
+
+                model: 3
+
+                delegate: Rectangle {
+                    id: rect
+                    width: 50; height: 50
+                    color: "red"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        drag.target: rect
+                        drag.axis: Drag.XAndYAxis
+                    }
+                }
+            }
+        }
     }
 
     //    Rectangle {
