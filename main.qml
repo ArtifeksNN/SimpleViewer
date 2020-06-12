@@ -23,6 +23,21 @@ ApplicationWindow {
     Rectangle {
         id: palettes
 
+        property var dragObj
+
+        function getSource(type) {
+            switch (type) {
+            case ComponentData.Circle:
+                return "Circle.qml";
+            case ComponentData.Triangle:
+                return "Triangle.qml"
+            case ComponentData.Square:
+                return "Square.qml"
+            default:
+                return ""
+            }
+        }
+
         implicitWidth: 300
         implicitHeight: 900
         color: "green"
@@ -60,9 +75,27 @@ ApplicationWindow {
             VisualSquare {
                 width: 150
                 height: 150
+
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: _viewerManager.addComponent(ComponentData.Square)
+                    hoverEnabled: true
+                    onPressed: {
+                        let component = Qt.createComponent(palettes.getSource(ComponentData.Square));
+
+                        if (palettes.dragObj) palettes.dragObj.destroy()
+                        palettes.dragObj = component.createObject(root, {x: mouseX, y: mouseY })
+                    }
+
+                    onPositionChanged: {
+                        if (palettes.dragObj) {
+                            palettes.dragObj.x = mouseX
+                            palettes.dragObj.y = mouseY
+                        }
+                    }
+
+                    onReleased: {
+                        if (palettes.dragObj) palettes.dragObj.destroy()
+                    }
                 }
             }
 
