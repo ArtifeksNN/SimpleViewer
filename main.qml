@@ -4,13 +4,17 @@ import QtQuick.Controls 2.14
 
 import ComponentData 1.0
 
-ApplicationWindow {
+Window {
     id: root
 
     visible: true
     width: 800
     height: 816
     title: qsTr("Simple Viewer")
+    maximumWidth: 800
+    maximumHeight: 816
+    minimumWidth: 800
+    minimumHeight: 816
 
     Rectangle {
         id: palettes
@@ -173,6 +177,42 @@ ApplicationWindow {
             AppText {
                 anchors.centerIn: parent
                 text: "Number of objects:%1".arg(_viewerManager.objectsCount)
+            }
+        }
+
+        Rectangle {
+            anchors {
+                top: mainScreenHeader.bottom
+                topMargin: -1
+                right: parent.right
+                bottom: parent.bottom
+                bottomMargin: -1
+            }
+
+            width: 6
+            z: 3
+
+            border {
+                width: 1
+                color: "#000000"
+            }
+
+            ScrollBar {
+                id: control
+
+                height: parent.height
+                width: parent.width
+
+                size: mainColumn.height / mainColumn.contentHeight
+                position: mainColumn.contentY / mainColumn.contentHeight
+                active: true
+                orientation: Qt.Vertical
+
+                contentItem: Rectangle {
+                    implicitWidth: 2
+                    implicitHeight: control.height
+                    color: "#000000"
+                }
             }
         }
     }
