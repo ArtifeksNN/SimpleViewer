@@ -57,9 +57,32 @@ ApplicationWindow {
 
             spacing: 122
 
-            Square {}
-            Circle{}
-            Triangle{}
+            VisualSquare {
+                width: 150
+                height: 150
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: _viewerManager.addComponent(ComponentData.Square)
+                }
+            }
+
+            VisualCircle {
+                width: 150
+                height: 150
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: _viewerManager.addComponent(ComponentData.Circle)
+                }
+            }
+
+            VisualTriangle {
+                width: 150
+                height: 150
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: _viewerManager.addComponent(ComponentData.Triangle)
+                }
+            }
         }
     }
 
@@ -68,103 +91,34 @@ ApplicationWindow {
 
         anchors {
             left: palettes.right
+            leftMargin: -1
             right: parent.right
         }
         height: parent.height
-        color: "gray"
         clip: true
+        border {
+            width: 1
+            color: "#000000"
+        }
 
-        Flickable {
+        Repeater {
             anchors.fill: parent
-//            boundsMovement: Flickable.StopAtBounds
-//            boundsBehavior: Flickable.DragOverBounds
-            contentWidth: creator.width;
-            contentHeight: creator.height
-
-            Repeater {
-                id: creator
-
-                model: 3
-
-                delegate: Rectangle {
-                    id: rect
-                    width: 50; height: 50
-                    color: "red"
-
-                    MouseArea {
-                        anchors.fill: parent
-                        drag.target: rect
-                        drag.axis: Drag.XAndYAxis
+            model: _viewerManager.componentModel
+            delegate: Loader {
+                function getSource(type) {
+                    switch (type) {
+                    case ComponentData.Circle:
+                        return "Circle.qml";
+                    case ComponentData.Triangle:
+                        return "Triangle.qml"
+                    case ComponentData.Square:
+                        return "Square.qml"
+                    default:
+                        return ""
                     }
                 }
+                source: getSource(itemType)
             }
         }
     }
-
-    //    Rectangle {
-    //        anchors.fill: parent
-    //        color:"white"
-    //        border.color: "black"
-    //        border.width: 1
-    //    }
-
-    //    GridLayout {
-    //        anchors {
-    //            top: topBar.bottom
-    //            left: parent.left
-    //            leftMargin: 10
-    //            right: sideBar.left
-    //            rightMargin: 10
-    //            bottom: parent.bottom
-    //        }
-    //        Layout.fillHeight: true
-    //        Layout.fillWidth: true
-    //        columns: 7
-
-    //        Repeater {
-    //            id: viewer
-
-    //            model: _viewerManager.componentModel
-    //            delegate: Component {
-    //                Loader {
-    //                    function getSource(type) {
-    //                        switch (type) {
-    //                        case ComponentData.Circle:
-    //                            return "Circle.qml";
-    //                        case ComponentData.Triangle:
-    //                            return "Triangle.qml"
-    //                        case ComponentData.Square:
-    //                            return "Square.qml"
-    //                        default:
-    //                            return ""
-    //                        }
-    //                    }
-    //                    source: getSource(type)
-    //                    onLoaded: item.highlighted = highlight
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    SideBar {
-    //        id: sideBar
-
-    //        anchors {
-    //            top: topBar.bottom
-    //            topMargin: -1
-    //            right: parent.right
-    //            bottom: parent.bottom
-    //        }
-    //    }
-
-    //    TopBar {
-    //        id: topBar
-
-    //        anchors {
-    //            top: parent.top
-    //            left: parent.left
-    //            right: parent.right
-    //        }
-    //        height: 100
-    //    }
 }

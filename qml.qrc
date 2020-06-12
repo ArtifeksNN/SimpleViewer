@@ -6,5 +6,8 @@
         <file>Square.qml</file>
         <file>AppText.qml</file>
         <file>CoreItem.qml</file>
+        <file>VisualSquare.qml</file>
+        <file>VisualCircle.qml</file>
+        <file>VisualTriangle.qml</file>
     </qresource>
 </RCC>
