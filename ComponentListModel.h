@@ -27,6 +27,8 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
     void addComponent(int type);
+    void switchType(int index);
+
 private:
     QList<Component> m_componentList;
 };

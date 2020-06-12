@@ -1,5 +1,3 @@
-#include <QDebug>
-
 #include "ComponentListModel.h"
 #include "ComponentData.h"
 
@@ -61,4 +59,21 @@ void ComponentListModel::addComponent(int type)
         break;
     }
     endInsertRows();
+}
+
+void ComponentListModel::switchType(int index)
+{
+    emit layoutAboutToBeChanged();
+    const auto& type = m_componentList.at(index).m_type;
+    switch (type) {
+    case ComponentData::Circle:
+        m_componentList[index].m_type = ComponentData::Square;
+        break;
+    case ComponentData::Square:
+        m_componentList[index].m_type = ComponentData::Circle;
+        break;
+    default:
+        break;
+    }
+    emit layoutChanged();
 }

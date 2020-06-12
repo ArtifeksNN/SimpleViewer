@@ -4,7 +4,7 @@ Text {
     id: root
 
     font {
-        family: "Roboto"
+        family: "Helvetica Neue"
         pixelSize: 26
     }
 }

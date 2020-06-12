@@ -17,4 +17,15 @@ ComponentListModel *ViewerManager::componentModel() const
 void ViewerManager::addComponent(int type)
 {
     m_componentModel->addComponent(type);
+    emit objectsCountChanged();
+}
+
+void ViewerManager::switchType(int index)
+{
+    m_componentModel->switchType(index);
+}
+
+int ViewerManager::objectsCount() const
+{
+    return m_componentModel->rowCount(QModelIndex());
 }

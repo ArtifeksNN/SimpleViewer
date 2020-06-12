@@ -13,19 +13,11 @@ ApplicationWindow {
     height: 816
     title: qsTr("Simple Viewer")
 
-    background: Rectangle {
-        border {
-            width: 1
-            color: "#000000"
-        }
-    }
-
     Rectangle {
         id: palettes
 
-        implicitWidth: 300
-        implicitHeight: 900
-        color: "green"
+        width: 300
+        height: 900
 
         border {
             width: 1
@@ -126,9 +118,10 @@ ApplicationWindow {
             delegate: Rectangle {
                 width: 500
                 height: 150
+
                 border {
-                    width: 1
-                    color: "#000000"
+                    width: activeArea.containsMouse ? 3 : 1
+                    color: activeArea.containsMouse ? "#2D9CDB" : "#000000"
                 }
 
                 Loader {
@@ -138,8 +131,6 @@ ApplicationWindow {
                         switch (type) {
                         case ComponentData.Circle:
                             return "Circle.qml";
-                        case ComponentData.Triangle:
-                            return "Triangle.qml"
                         case ComponentData.Square:
                             return "Square.qml"
                         default:
@@ -149,6 +140,16 @@ ApplicationWindow {
 
                     source: getSource(itemType)
                 }
+
+                MouseArea {
+                    id: activeArea
+
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onDoubleClicked: {
+                        _viewerManager.switchType(index)
+                    }
+                }
             }
         }
 
@@ -157,6 +158,7 @@ ApplicationWindow {
 
             anchors {
                 bottom: parent.bottom
+                bottomMargin: -1
             }
 
             width: parent.width
@@ -168,7 +170,7 @@ ApplicationWindow {
 
             AppText {
                 anchors.centerIn: parent
-                text: "Number of objects:%1".arg(1)
+                text: "Number of objects:%1".arg(_viewerManager.objectsCount)
             }
         }
     }
