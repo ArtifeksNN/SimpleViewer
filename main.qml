@@ -9,8 +9,8 @@ ApplicationWindow {
     id: root
 
     visible: true
-    width: 1500
-    height: 900
+    width: 800
+    height: 816
     title: qsTr("Simple Viewer")
 
     background: Rectangle {
@@ -22,21 +22,6 @@ ApplicationWindow {
 
     Rectangle {
         id: palettes
-
-        property var dragObj
-
-        function getSource(type) {
-            switch (type) {
-            case ComponentData.Circle:
-                return "Circle.qml";
-            case ComponentData.Triangle:
-                return "Triangle.qml"
-            case ComponentData.Square:
-                return "Square.qml"
-            default:
-                return ""
-            }
-        }
 
         implicitWidth: 300
         implicitHeight: 900
@@ -78,42 +63,17 @@ ApplicationWindow {
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: true
-                    onPressed: {
-                        let component = Qt.createComponent(palettes.getSource(ComponentData.Square));
-
-                        if (palettes.dragObj) palettes.dragObj.destroy()
-                        palettes.dragObj = component.createObject(root, {x: mouseX, y: mouseY })
-                    }
-
-                    onPositionChanged: {
-                        if (palettes.dragObj) {
-                            palettes.dragObj.x = mouseX
-                            palettes.dragObj.y = mouseY
-                        }
-                    }
-
-                    onReleased: {
-                        if (palettes.dragObj) palettes.dragObj.destroy()
-                    }
+                    onDoubleClicked: _viewerManager.addComponent(ComponentData.Square)
                 }
             }
 
             VisualCircle {
                 width: 150
                 height: 150
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: _viewerManager.addComponent(ComponentData.Circle)
-                }
-            }
 
-            VisualTriangle {
-                width: 150
-                height: 150
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: _viewerManager.addComponent(ComponentData.Triangle)
+                    onDoubleClicked: _viewerManager.addComponent(ComponentData.Circle)
                 }
             }
         }
@@ -134,23 +94,81 @@ ApplicationWindow {
             color: "#000000"
         }
 
-        Repeater {
-            anchors.fill: parent
+        Rectangle {
+            id: mainScreenHeader
+
+            width: parent.width
+            height: 70
+            border {
+                width: 1
+                color: "#000000"
+            }
+
+            AppText {
+                anchors.centerIn: parent
+                text: "Main Screen"
+            }
+        }
+
+        ListView {
+            id: mainColumn
+
+            anchors {
+                top: mainScreenHeader.bottom
+                topMargin: -1
+                bottom: objectsNumber.top
+            }
+
+            width: parent.width
             model: _viewerManager.componentModel
-            delegate: Loader {
-                function getSource(type) {
-                    switch (type) {
-                    case ComponentData.Circle:
-                        return "Circle.qml";
-                    case ComponentData.Triangle:
-                        return "Triangle.qml"
-                    case ComponentData.Square:
-                        return "Square.qml"
-                    default:
-                        return ""
-                    }
+            spacing: -1
+
+            delegate: Rectangle {
+                width: 500
+                height: 150
+                border {
+                    width: 1
+                    color: "#000000"
                 }
-                source: getSource(itemType)
+
+                Loader {
+                    anchors.centerIn: parent
+
+                    function getSource(type) {
+                        switch (type) {
+                        case ComponentData.Circle:
+                            return "Circle.qml";
+                        case ComponentData.Triangle:
+                            return "Triangle.qml"
+                        case ComponentData.Square:
+                            return "Square.qml"
+                        default:
+                            return ""
+                        }
+                    }
+
+                    source: getSource(itemType)
+                }
+            }
+        }
+
+        Rectangle {
+            id: objectsNumber
+
+            anchors {
+                bottom: parent.bottom
+            }
+
+            width: parent.width
+            height: 50
+            border {
+                width: 1
+                color: "#000000"
+            }
+
+            AppText {
+                anchors.centerIn: parent
+                text: "Number of objects:%1".arg(1)
             }
         }
     }

@@ -5,7 +5,7 @@ Rectangle {
 
     property bool highlightedState: false
 
-    color: "#FFF500"
+    color: "#24FF00"
     antialiasing: true
 
     border.color: highlightedState ? "#0057FF" : "#000000"

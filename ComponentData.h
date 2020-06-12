@@ -13,8 +13,7 @@ public:
     enum ComponentType
     {
         Square = 0,
-        Circle,
-        Triangle,
+        Circle
     };
 };
 }

@@ -5,8 +5,8 @@ Item {
 
     property bool isHighlighted: false
 
-    implicitWidth: 150
-    implicitHeight: 150
+    implicitWidth: 100
+    implicitHeight: 100
 
     RotationAnimation on rotation {
         running: isHighlighted

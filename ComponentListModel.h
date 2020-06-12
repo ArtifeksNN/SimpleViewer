@@ -9,8 +9,6 @@ struct Component
 {
     int m_type;
     QString m_color;
-    int x = 0;
-    int y = 0;
 };
 
 class ComponentListModel : public QAbstractListModel

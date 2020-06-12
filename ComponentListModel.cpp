@@ -54,9 +54,6 @@ void ComponentListModel::addComponent(int type)
     case ComponentData::Circle:
         m_componentList.append({type, "#FFF500"});
         break;
-    case ComponentData::Triangle:
-        m_componentList.append({type, "#24FF00"});
-        break;
     case ComponentData::Square:
         m_componentList.append({type, "#0057FF"});
         break;
