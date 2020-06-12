@@ -50,10 +50,10 @@ void ComponentListModel::addComponent(int type)
     beginInsertRows(QModelIndex(), m_componentList.size(), m_componentList.size());
     switch (type) {
     case ComponentData::Circle:
-        m_componentList.append({type, "#FFF500"});
+        m_componentList.append({type, "#24FF00"});
         break;
     case ComponentData::Square:
-        m_componentList.append({type, "#0057FF"});
+        m_componentList.append({type, "#FE0000"});
         break;
     default:
         break;

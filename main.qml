@@ -1,6 +1,5 @@
 import QtQuick 2.14
 import QtQuick.Window 2.14
-import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.14
 
 import ComponentData 1.0
@@ -91,6 +90,7 @@ ApplicationWindow {
 
             width: parent.width
             height: 70
+            z: 2
             border {
                 width: 1
                 color: "#000000"
@@ -109,8 +109,8 @@ ApplicationWindow {
                 top: mainScreenHeader.bottom
                 topMargin: -1
                 bottom: objectsNumber.top
+                bottomMargin: -1
             }
-
             width: parent.width
             model: _viewerManager.componentModel
             spacing: -1
@@ -139,6 +139,7 @@ ApplicationWindow {
                     }
 
                     source: getSource(itemType)
+                    onLoaded: item.itemColor = itemColor
                 }
 
                 MouseArea {
@@ -163,6 +164,7 @@ ApplicationWindow {
 
             width: parent.width
             height: 50
+            z: 2
             border {
                 width: 1
                 color: "#000000"
